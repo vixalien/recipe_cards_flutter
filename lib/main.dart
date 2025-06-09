@@ -1,122 +1,223 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Recipe Card Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: RecipeCardScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
+// Recipe data model
+class Recipe {
   final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  final String imageUrl;
+  final String description;
+  final String cookTime;
+  final String difficulty;
+  
+  Recipe({
+    required this.title,
+    required this.imageUrl,
+    required this.description,
+    required this.cookTime,
+    required this.difficulty,
+  });
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class RecipeCardScreen extends StatelessWidget {
+  // List of recipe objects - this is how real apps store data
+  final List<Recipe> recipes = [
+    Recipe(
+      title: 'Classic Margherita Pizza',
+      imageUrl: 'https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop',
+      description: 'Traditional Italian pizza with fresh tomatoes, mozzarella, and basil.',
+      cookTime: '25 mins',
+      difficulty: 'Easy',
+    ),
+    Recipe(
+      title: 'Chicken Teriyaki Bowl',
+      imageUrl: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop',
+      description: 'Delicious grilled chicken with teriyaki sauce over steamed rice.',
+      cookTime: '30 mins',
+      difficulty: 'Medium',
+    ),
+    Recipe(
+      title: 'Fresh Garden Salad',
+      imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop',
+      description: 'Crisp lettuce, tomatoes, cucumbers with homemade vinaigrette.',
+      cookTime: '10 mins',
+      difficulty: 'Easy',
+    ),
+    Recipe(
+      title: 'Beef Stir Fry',
+      imageUrl: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=300&fit=crop',
+      description: 'Quick and flavorful beef stir fry with fresh vegetables.',
+      cookTime: '20 mins',
+      difficulty: 'Medium',
+    ),
+  ];
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  RecipeCardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('Recipe Cards'),
+        backgroundColor: Colors.green,
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+          // Property 1: crossAxisAlignment - Controls horizontal alignment
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // Property 2: mainAxisAlignment - Controls vertical spacing between children
+          mainAxisAlignment: MainAxisAlignment.start,
+          // Property 3: mainAxisSize - Controls how much vertical space the Column takes
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Generate RecipeCard widgets from the recipes list
+            ...recipes.map((recipe) => Padding(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: RecipeCard(
+                title: recipe.title,
+                imageUrl: recipe.imageUrl,
+                description: recipe.description,
+                cookTime: recipe.cookTime,
+                difficulty: recipe.difficulty,
+              ),
+            )).toList(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class RecipeCard extends StatelessWidget {
+  final String title;
+  final String imageUrl;
+  final String description;
+  final String cookTime;
+  final String difficulty;
+  
+  const RecipeCard({
+    Key? key,
+    required this.title,
+    required this.imageUrl,
+    required this.description,
+    required this.cookTime,
+    required this.difficulty,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Column(
+        // Property 3: mainAxisSize - Controls how much vertical space the Column takes
+        mainAxisSize: MainAxisSize.min, // Try: MainAxisSize.max
+        children: [
+          // Image.network widget demonstration
+          Image.network(
+            imageUrl,
+            // Property 1: height - Controls the image height
+            height: 200,
+            width: double.infinity,
+            // Property 2: fit - Controls how image fills the container
+            fit: BoxFit.cover, // Try: BoxFit.fill, BoxFit.contain, BoxFit.fitWidth
+            // Property 3: loadingBuilder - Shows loading indicator while image loads
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Container(
+                height: 200,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                ),
+              );
+            },
+            // Error handling for failed image loads
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                height: 200,
+                color: Colors.grey[300],
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.error, color: Colors.red, size: 40),
+                      Text('Failed to load image'),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+          
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  description,
+                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                ),
+                SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.access_time, size: 16, color: Colors.orange),
+                        SizedBox(width: 4),
+                        Text(cookTime, style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: difficulty == 'Easy' ? Colors.green[100] : Colors.orange[100],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        difficulty,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: difficulty == 'Easy' ? Colors.green[800] : Colors.orange[800],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
