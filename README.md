@@ -29,7 +29,7 @@ A recipe card app demonstrating Column layout widget and Image.network for loadi
 
 ## Presentation
 
-![Presentation Link](https://docs.google.com/presentation/d/1F6-xyEVuZhk22PWdIQT6_RYD8vSasW5Z6OjdmoiCAmU/edit?usp=sharing)
+[Presentation Link](https://docs.google.com/presentation/d/1F6-xyEVuZhk22PWdIQT6_RYD8vSasW5Z6OjdmoiCAmU/edit?usp=sharing)
 
 ## Real-World Use Case
 
